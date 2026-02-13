@@ -18,6 +18,26 @@ if (currentTheme) {
         themeToggle.checked = true;
     }
 }
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark-mode');
+    } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light-mode');
+    }
+});
+
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+    body.classList.add(currentTheme);
+    if (currentTheme === 'dark-mode') {
+        themeToggle.checked = true;
+    }
+}
 class LottoGenerator extends HTMLElement {
     constructor() {
         super();
@@ -103,6 +123,15 @@ class LottoGenerator extends HTMLElement {
         });
     }
 
+    getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
     generateNumbers(container) {
         container.innerHTML = '';
         const numbers = new Set();
@@ -117,6 +146,7 @@ class LottoGenerator extends HTMLElement {
                 const numberElement = document.createElement('div');
                 numberElement.classList.add('number');
                 numberElement.textContent = number;
+                numberElement.style.backgroundColor = this.getRandomColor();
                 container.appendChild(numberElement);
             }, index * 200);
         });
