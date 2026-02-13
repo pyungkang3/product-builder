@@ -25,6 +25,7 @@ class LottoGenerator extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({ mode: 'open' });
+        this.rainbowColors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
 
         const template = document.createElement('template');
         template.innerHTML = `
@@ -108,15 +109,6 @@ class LottoGenerator extends HTMLElement {
         });
     }
 
-    getRandomColor() {
-        let color = '#';
-        for (let i = 0; i < 3; i++) {
-            const value = (Math.floor(Math.random() * 156) + 100).toString(16);
-            color += value.length < 2 ? '0' + value : value;
-        }
-        return color;
-    }
-
     generateNumbers(container) {
         container.innerHTML = '';
         const numbers = new Set();
@@ -131,7 +123,7 @@ class LottoGenerator extends HTMLElement {
                 const numberElement = document.createElement('div');
                 numberElement.classList.add('number');
                 numberElement.textContent = number;
-                numberElement.style.backgroundColor = this.getRandomColor();
+                numberElement.style.backgroundColor = this.rainbowColors[index % this.rainbowColors.length];
                 container.appendChild(numberElement);
             }, index * 200);
         });
