@@ -57,6 +57,8 @@ class LottoGenerator extends HTMLElement {
                     margin: 0 0.5rem;
                     box-shadow: 0 4px 8px var(--shadow-color);
                     animation: pop-in 0.5s ease-out forwards;
+                    color: #fff;
+                    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
                 }
 
                 @keyframes pop-in {
@@ -107,10 +109,10 @@ class LottoGenerator extends HTMLElement {
     }
 
     getRandomColor() {
-        const letters = '0123456789ABCDEF';
         let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+        for (let i = 0; i < 3; i++) {
+            const value = (Math.floor(Math.random() * 156) + 100).toString(16);
+            color += value.length < 2 ? '0' + value : value;
         }
         return color;
     }
